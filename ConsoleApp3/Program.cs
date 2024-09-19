@@ -5,4 +5,4 @@ Console.WriteLine("Hello, World!");
 int num = 0;
 Console.WriteLine(num);
 num = +5;
-Console.WriteLine(num);
+Console.WriteLine($"Sumo {num}");
