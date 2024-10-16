@@ -1,0 +1,32 @@
+﻿@page "/Peliculas"
+@rendermode InteractiveServer
+
+<h1>Peliculas que vi</h1>
+<h5>Agregar una película</h5>
+
+<label> Nombre
+    <input type="text" />
+</label>
+
+<label>
+    Calificación (valor del 1 al 5)
+    <input type="number" @bind="Calificación"/>
+</label>
+
+@if (Calificación > 5)
+{
+    <h6>La calificación debe ser del valor 1 al 5!</h6>
+}
+
+<button type="button" class="btn btn-primary" @onclick="Agregar">Agregar Película</button>
+
+@code {
+    private int CantPeliculas = 0;
+
+    private int Calificación = 0;
+
+    private void Agregar()
+    {
+        CantPeliculas++;
+    }
+}
