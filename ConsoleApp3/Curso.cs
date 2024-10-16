@@ -15,10 +15,10 @@ namespace ConsoleApp3
 
         public Curso(string nombreCurso, int cantidadMaximaAlumnos, Profesor profesor)
         {
-            //nombreCurso = Nombre;
-            //cantidadMaximaAlumnos = CantidadMaximaAlumnos;
-            //profesor = Profesor;
-            //Alumnos = new Alumno[CantidadMaximaAlumnos];
+            nombreCurso = Nombre;
+            cantidadMaximaAlumnos = CantidadMaximaAlumnos;
+            profesor = Profesor;
+            Alumnos = new Alumno[CantidadMaximaAlumnos];
         }
     }
 }

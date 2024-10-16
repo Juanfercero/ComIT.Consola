@@ -16,5 +16,10 @@ namespace ConsoleApp3
         {
             Trabaja = trabaja;
         }
+
+        public virtual string DevolverNombreCompleto()
+        {
+            return ($"{Nombre} {Apellido}");
+        }
     }
 }
