@@ -14,8 +14,16 @@
     <input type="number" @bind="Calificación"/>
 </label>
 
+@if (EstamosModificando == true)
+{
+    <button type="button" class="btn btn-primary" @onclick="GuardarCambios">GuardarCambios</button>
+}
+else
+{
+    <button type="button" class="btn btn-primary" @onclick="Agregar">Agregar Película</button>
+}
+<br/>
 
-<button type="button" class="btn btn-primary" @onclick="Agregar">Agregar Película</button> <br/>
 @if (MensajeError != "")
 {
     <label style="color: red">Error al crear una película: @MensajeError</label>
@@ -25,18 +33,20 @@
 <table class="table table-striped table-hover">
     <thead>
         <tr>
-            <th>#</th>
             <th>Nombre</th>
             <th>Calificación</th>
         </tr>
     </thead>
     <tbody>
-        @for (int i = 0; i < CantPeliculas; i++)
+        @foreach (var item in PeliculasList)
         {
             <tr>
-                <td>@(i +1)</td>
-                <td>@PeliculasList[i].Nombre</td>
-                <td>@PeliculasList[i].Calificación</td>
+                <td>@item.Nombre</td>
+                <td>@item.Calificación</td>
+                <td>
+                    <button type="button" class="btn btn-link" @onclick="() => Modificar(item)">Modificar</button>
+                    <button type="button" class="btn btn-link" @onclick="() => Eliminar(item)">Eliminar</button>
+                </td>
             </tr>
         }
     </tbody>
@@ -47,12 +57,14 @@
 @code {
     private int CantPeliculas = 0;
     private string MensajeError = "";
+    private bool EstamosModificando = false;
+    private PeliculasEntity? PeliculasModificando;
 
     private int Calificación = 0;
     private string Nombre = "";
 
-
     private List<PeliculasEntity> PeliculasList = new();
+
 
     private void Agregar()
     {
@@ -72,6 +84,45 @@
 
             MensajeError = "";
         }
-        
+
+    }
+
+    private void Modificar(PeliculasEntity peliculaModificar)
+    {
+        EstamosModificando = true;
+        PeliculasModificando = peliculaModificar;
+
+        Nombre = peliculaModificar.Nombre;
+        Calificación = peliculaModificar.Calificación;
+    }
+
+    private void GuardarCambios()
+    {
+        @if (Calificación > 5 || Calificación < 1)
+        {
+            MensajeError = "La calificación debe ser del valor 1 al 5!";
+        }
+        else if (Nombre == "")
+        {
+            MensajeError = "Faltaron datos por ingresar!";
+        }
+        else
+        {
+            PeliculasModificando.Nombre = Nombre;
+            PeliculasModificando.Calificación = Calificación;
+
+            Nombre = "";
+            Calificación = 0;
+
+            EstamosModificando = false;
+            PeliculasModificando = null;
+        }
+    }
+
+    private void Eliminar(PeliculasEntity peliculaEliminar)
+    {
+        PeliculasList.Remove(peliculaEliminar);
+
+        CantPeliculas--;
     }
 }
