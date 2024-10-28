@@ -11,14 +11,14 @@ namespace ConsoleApp3
         public string Nombre = "";
         public int CantidadMaximaAlumnos = 1;
         public Profesor Profesor;
-        public Alumno[] Alumnos;
+        public List<Alumno> Alumnos;
 
         public Curso(string nombreCurso, int cantidadMaximaAlumnos, Profesor profesor)
         {
-            nombreCurso = Nombre;
-            cantidadMaximaAlumnos = CantidadMaximaAlumnos;
-            profesor = Profesor;
-            Alumnos = new Alumno[CantidadMaximaAlumnos];
+            Nombre = nombreCurso;
+            CantidadMaximaAlumnos = cantidadMaximaAlumnos;
+            Profesor = profesor;
+            Alumnos = new List<Alumno>();
         }
     }
 }

@@ -1,11 +1,12 @@
 ﻿@page "/Peliculas"
+@using BlazorApp1.Components.Entities
 @rendermode InteractiveServer
 
 <h1>Peliculas que vi</h1>
 <h5>Agregar una película</h5>
 
 <label> Nombre
-    <input type="text" />
+    <input type="text" @bind="Nombre"/>
 </label>
 
 <label>
@@ -13,20 +14,64 @@
     <input type="number" @bind="Calificación"/>
 </label>
 
-@if (Calificación > 5)
+
+<button type="button" class="btn btn-primary" @onclick="Agregar">Agregar Película</button> <br/>
+@if (MensajeError != "")
 {
-    <h6>La calificación debe ser del valor 1 al 5!</h6>
+    <label style="color: red">Error al crear una película: @MensajeError</label>
 }
 
-<button type="button" class="btn btn-primary" @onclick="Agregar">Agregar Película</button>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Calificación</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < CantPeliculas; i++)
+        {
+            <tr>
+                <td>@(i +1)</td>
+                <td>@PeliculasList[i].Nombre</td>
+                <td>@PeliculasList[i].Calificación</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<label>@CantPeliculas</label>
 
 @code {
     private int CantPeliculas = 0;
+    private string MensajeError = "";
 
     private int Calificación = 0;
+    private string Nombre = "";
+
+
+    private List<PeliculasEntity> PeliculasList = new();
 
     private void Agregar()
     {
-        CantPeliculas++;
+        @if (Calificación > 5 || Calificación < 1)
+        {
+            MensajeError = "La calificación debe ser del valor 1 al 5!";
+        }
+        else if(Nombre == "")
+        {
+            MensajeError = "Faltaron datos por ingresar!";
+        }
+        else {
+            PeliculasList.Add(new PeliculasEntity(Nombre, Calificación));
+            Nombre = "";
+            Calificación = 0;
+            CantPeliculas++;
+
+            MensajeError = "";
+        }
+        
     }
 }
