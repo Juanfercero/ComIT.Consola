@@ -1,0 +1,62 @@
+﻿@using BlazorApp1.Components.Entities;
+@rendermode InteractiveServer
+
+<h4>PeliculasListado</h4>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Calificación</th>
+            @if (ColumnasAdicionales != null)
+            {
+                <td>
+                    
+                </td>
+            }
+            @if (MostrarBotones)
+            {
+                <th></th>
+            }
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Datos)
+        {
+            <tr>
+                <td>@item.Nombre</td>
+                <td>@item.Calificación</td>
+                @if (ColumnasAdicionales != null)
+                {
+                    <td>
+                        @ColumnasAdicionales
+                    </td>
+                }
+                @if (MostrarBotones)
+                {
+                    <td>
+                        <button type="button" class="btn btn-link" @onclick="() => ModificarEvent.InvokeAsync(item)">Modificar</button>
+                        <button type="button" class="btn btn-link" @onclick="() => EliminarEvent.InvokeAsync(item)">Eliminar</button>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<label>Cantidad de Peliculas: @Datos.Count</label>
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public List<PeliculasEntity> Datos { get; set; }
+    [Parameter]
+    public bool MostrarBotones { get; set; } = false;
+    [Parameter]
+    public RenderFragment ColumnasAdicionales { get; set; } = null;
+    [Parameter]
+    public EventCallback<PeliculasEntity> ModificarEvent { get; set; }
+    [Parameter]
+    public EventCallback<PeliculasEntity> EliminarEvent { get; set; }
+}

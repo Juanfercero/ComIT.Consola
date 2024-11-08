@@ -1,0 +1,17 @@
+﻿@page "/PeliculasReporte"
+@using BlazorApp1.Components.Entities
+@inject NavigationManager navigation
+@rendermode InteractiveServer
+
+<PeliculasListado Datos="PeliculasList"/>
+
+<button @onclick="IrMaestro"> Ir a Maestro </button>
+
+@code {
+    private List<PeliculasEntity> PeliculasList = new();
+
+    private void IrMaestro()
+    {
+        navigation.NavigateTo("Peliculas");
+    }
+}
