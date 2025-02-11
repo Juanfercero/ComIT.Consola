@@ -1,0 +1,60 @@
+﻿@using BlazorApp1.Components.Entities;
+@rendermode InteractiveServer
+
+<!-- Modal -->
+<div class="modal @StatusModal" tabindex="-1" style="display:@StyleDisplay">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva pelicula</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if (Data != null)
+                {
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-nombre" class="col-form-label">Nombre:</label>
+                            <input type="text" class="form-control" id="recipient-nombre" @bind="Data.Nombre">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-calificacion" class="col-form-label">Calificación(valor del 1 al 5):</label>
+                            <input type="number" class="form-control" id="recipient-calificacion" @bind="Data.Calificación">
+                        </div>
+                    </form>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="Close">Cancelar</button>
+                <button type="button" class="btn btn-primary" @onclick="() => GuardarEventCallback.InvokeAsync()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public PeliculasEntity? Data { get; set; }
+    [Parameter]
+    public EventCallback GuardarEventCallback { get; set; }
+
+    private string StatusModal = "fade";
+    private string StyleDisplay = "none";
+
+    // private int Calificación = 0;
+    // private string Nombre = "";
+
+    public void Open()
+    {
+        StatusModal = "show";
+        StyleDisplay = "block";
+        StateHasChanged();
+    }
+
+    public void Close()
+    {
+        StatusModal = "fade";
+        StyleDisplay = "none";
+        StateHasChanged();
+    }
+}

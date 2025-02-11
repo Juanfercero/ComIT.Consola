@@ -4,9 +4,10 @@
 @rendermode InteractiveServer
 
 <h1>Peliculas que vi</h1>
+
 <h5>Agregar una película</h5>
 
-<label> Nombre
+@* <label> Nombre
     <input type="text" @bind="Nombre"/>
 </label>
 
@@ -28,7 +29,11 @@ else
 @if (MensajeError != "")
 {
     <label style="color: red">Error al crear una película: @MensajeError</label>
-}
+} *@
+
+<PeliculaModal @ref="modal" Data="PeliculasModificando" GuardarEventCallback="Guardar"/>
+
+<button type="button" class="btn btn-primary" @onclick="NuevaPelicula">Nuevo</button>
 
 <PeliculasListado Datos="PeliculasList" MostrarBotones="true" ModificarEvent="Modificar" EliminarEvent="Eliminar"> 
     

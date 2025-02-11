@@ -16,24 +16,42 @@ namespace BlazorApp1.Components.Pages.Peliculas
 
         private List<PeliculasEntity> PeliculasList = new();
 
+        private PeliculaModal modal = default!;
 
-        private void Agregar()
+        private void NuevaPelicula()
         {
-            if (Calificación > 5 || Calificación < 1)
+            PeliculasModificando = new PeliculasEntity();
+            modal.Open();
+        }
+
+        private void Guardar()
+        {
+            if (PeliculasModificando.Calificación > 5 || PeliculasModificando.Calificación < 1)
             {
                 MensajeError = "La calificación debe ser del valor 1 al 5!";
             }
-            else if (Nombre == "")
+            else if (PeliculasModificando.Nombre == "")
             {
                 MensajeError = "Faltaron datos por ingresar!";
             }
             else
             {
-                PeliculasList.Add(new PeliculasEntity(Nombre, Calificación));
-                Nombre = "";
-                Calificación = 0;
+                if (!EstamosModificando)
+                {
+                    PeliculasList.Add(PeliculasModificando);
+                }
+                else
+                {
+                    EstamosModificando = false;
+                }
+
+                //Nombre = "";
+                //Calificación = 0;
+
+                PeliculasModificando = null;
 
                 MensajeError = "";
+                modal.Close();
             }
 
         }
@@ -43,8 +61,7 @@ namespace BlazorApp1.Components.Pages.Peliculas
             EstamosModificando = true;
             PeliculasModificando = peliculaModificar;
 
-            Nombre = peliculaModificar.Nombre;
-            Calificación = peliculaModificar.Calificación;
+            modal.Open();
         }
 
         private void GuardarCambios()

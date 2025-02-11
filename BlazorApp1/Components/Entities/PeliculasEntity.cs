@@ -5,6 +5,8 @@
         public string Nombre = "";
         public int Calificación = 0;
 
+        public PeliculasEntity() : base() { }
+
         public PeliculasEntity(string nombre, int calificacion)
         {
             Nombre = nombre;
